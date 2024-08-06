@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout3}">
+
+  <th:block layout:fragment="css">
+	<style type="text/css">
+    	.body-container {
+    		max-width: 800px;
+    	}
+	</style>
+	<link rel="stylesheet" th:href="@{/dist/css/boot-board.css}" type="text/css">
+  </th:block>
+
+  <th:block layout:fragment="content">
+	
+	<div class="container">
+		<div class="body-container">	
+			<div class="body-title">
+				<h3><i class="bi bi-app"></i> 게시판 </h3>
+			</div>
+			
+			<div class="body-main">
+
+				<table class="table mt-5 mb-0 board-article">
+					<thead>
+						<tr>
+							<td colspan="2" align="center" th:text="${dto.subject}"></td>
+						</tr>
+					</thead>
+					
+					<tbody>
+						<tr>
+							<td width="50%" th:text="|이름 : ${dto.member.userName}|"></td>
+							<td align="right">
+								[[${#temporals.format(dto.regdate, 'yyyy-MM-dd HH:mm:ss')}]] | 조회 [[${dto.hitCount}]]
+							</td>
+						</tr>
+						
+						<tr>
+							<td colspan="2" valign="top" height="200" style="border-bottom: none;">
+								[(${dto.content})]
+							</td>
+						</tr>
+						
+						<tr>
+							<td colspan="2">
+								<th:block th:if="${dto.saveFilename != null}">
+									<p class="border text-secondary my-1 p-2">
+										<i class="bi bi-folder2-open"></i>
+										<a th:href="@{/board/download(num=${dto.num})}">[[${dto.originalFilename}]]</a>
+									</p>
+								</th:block>
+							</td>
+						</tr>
+											
+						<tr>
+							<td colspan="2">
+								이전글 :
+								<th:block th:if="${prevDto != null}">
+									<a th:href="|@{/board/article/{num}(num=${prevDto.num})}?${query}|">[[${prevDto.subject}]]</a>
+								</th:block>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								다음글 :
+								<th:block th:if="${nextDto != null}">
+									<a th:href="|@{/board/article/{num}(num=${nextDto.num})}?${query}|">[[${nextDto.subject}]]</a>
+								</th:block>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+				<table class="table table-borderless">
+					<tr>
+						<td width="50%">
+							<button type="button" class="btn btn-light" 
+								th:onclick="|location.href='@{/board/update(num=${dto.num}, page=${page})}'|">수정</button>
+							<button type="button" class="btn btn-light" 
+								th:onclick="deleteBoard('[[${dto.num}]]')">삭제</button>
+						</td>
+						<td class="text-end">
+							<button type="button" class="btn btn-light"
+								th:if="${#strings.isEmpty(kwd)}"
+								th:onclick="|location.href='@{/board/list(page=${page})}'|">리스트</button>
+							<button type="button" class="btn btn-light"
+								th:if="${not #strings.isEmpty(kwd)}"
+								th:onclick="|location.href='@{/board/list(page=${page}, schType=${schType}, kwd=${kwd})}'|">리스트</button>							
+						</td>
+					</tr>
+				</table>
+
+			</div>
+		</div>
+	</div>
+  </th:block>
+  
+  <th:block layout:fragment="script">
+	<script type="text/javascript">
+	function deleteBoard(num) {
+		if(confirm("위 자료를 삭제 하시겠습니까 ?")) {
+			let url = "[[@{/board/delete(page=${page}, schType=${schType}, kwd=${kwd})}]]&num=" + num;
+			location.href = url;
+		}
+	}
+	</script>
+  </th:block>
+
+</html>

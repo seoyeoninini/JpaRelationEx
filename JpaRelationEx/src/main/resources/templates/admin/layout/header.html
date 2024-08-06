@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+    <div th:fragment="header">
+    
+		<nav class="navbar navbar-expand-lg bg-light">
+			<div class="container">
+				<a class="navbar-brand" th:href="@{/}"><i class="bi bi-app-indicator"></i></a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+					
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav mx-auto flex-nowrap">
+						<li class="nav-item">
+							<a class="nav-link" aria-current="page" th:href="@{/admin}">홈</a>
+						</li>
+						
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								회원관리
+							</a>
+							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<li><a class="dropdown-item" href="#">회원리스트</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="#">회원분석</a></li>
+								<li><a class="dropdown-item" href="#">권한설정</a></li>
+							</ul>
+						</li>
+	
+						<li class="nav-item">
+							<a class="nav-link" href="#">강좌관리</a>
+						</li>
+	
+						<li class="nav-item">
+							<a class="nav-link" href="#">강사관리</a>
+						</li>
+
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								고객센터
+							</a>
+							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<li><a class="dropdown-item" href="#">자주하는 질문</a></li>
+								<li><a class="dropdown-item" href="#">공지사항</a></li>
+								<li><a class="dropdown-item" href="#">리뷰</a></li>
+								<li><a class="dropdown-item" href="#">1:1문의</a></li>
+								<li><a class="dropdown-item" href="#">신고</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="#">채팅 문의</a></li>
+							</ul>
+						</li>
+	
+						<li class="nav-item">
+							<a class="nav-link" href="#">게시판관리</a>
+						</li>
+	
+						<li class="nav-item">
+							<a class="nav-link" href="#">환경설정</a>
+						</li>
+					</ul>
+				</div>
+				
+			</div>
+		</nav>
+		
+	</div>
+</html>

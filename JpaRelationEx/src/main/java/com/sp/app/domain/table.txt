@@ -1,0 +1,72 @@
+
+DROP TABLE board PURGE;
+DROP TABLE member2 PURGE;
+DROP TABLE member PURGE;
+
+DROP SEQUENCE member_seq;
+DROP SEQUENCE board_seq;
+
+CREATE TABLE member (
+    memberIdx  NUMBER  NOT NULL,
+    userId    VARCHAR2(50) NOT NULL,
+    userName  VARCHAR2(30) NOT NULL,
+    userPwd   VARCHAR2(100) NOT NULL,
+    userRole  NUMBER(5) DEFAULT 1,
+    register_date  DATE DEFAULT SYSDATE,
+    modify_date  DATE DEFAULT SYSDATE,
+    PRIMARY KEY(memberIdx),
+    UNIQUE(userId)
+);
+
+CREATE TABLE member2 (
+     userId     VARCHAR2(50) NOT NULL,
+     email      VARCHAR2(100),
+     birth       DATE,
+     tel          VARCHAR2(20),
+     zip          VARCHAR2(10),
+     addr1      VARCHAR2(255),
+     addr2      VARCHAR2(255),
+     PRIMARY KEY(userId),
+     FOREIGN KEY(userId) REFERENCES member(userId)  ON DELETE CASCADE
+);
+
+CREATE SEQUENCE member_seq
+   INCREMENT BY 1
+   START WITH 1
+   NOMAXVALUE
+   NOCYCLE
+   NOCACHE;
+
+INSERT INTO member(memberIdx, userId, userName, userPwd, userRole, register_date, modify_date) 
+                VALUES (member_seq.NEXTVAL, 'admin', '관리자', 'admin', 99, SYSDATE, SYSDATE);
+INSERT INTO member(memberIdx, userId, userName, userPwd, userRole, register_date, modify_date) 
+                VALUES (member_seq.NEXTVAL, 'han123', '스프링', 'han123', 51, SYSDATE, SYSDATE);
+INSERT INTO member(memberIdx, userId, userName, userPwd, userRole, register_date, modify_date) 
+                VALUES (member_seq.NEXTVAL, 'kim123', '김자바', 'kim123', 1, SYSDATE, SYSDATE);
+INSERT INTO member(memberIdx, userId, userName, userPwd, userRole, register_date, modify_date) 
+                VALUES (member_seq.NEXTVAL, 'lee123', '이자바', 'lee123', 1, SYSDATE, SYSDATE);
+
+INSERT INTO member2(userId) VALUES ('admin');
+INSERT INTO member2(userId) VALUES ('han123');
+INSERT INTO member2(userId) VALUES ('kim123');
+
+COMMIT;
+
+CREATE TABLE board (
+    num  NUMBER PRIMARY KEY,
+    memberIdx NUMBER NOT NULL,
+    subject VARCHAR2(200) NOT NULL,
+    content VARCHAR2(4000) NOT NULL,
+    hitCount NUMBER  DEFAULT 0,
+    reg_date DATE DEFAULT SYSDATE,
+    saveFilename VARCHAR2(500),
+    originalFilename VARCHAR2(500),
+    FOREIGN KEY(memberIdx) REFERENCES member(memberIdx)
+);
+
+CREATE SEQUENCE board_seq
+INCREMENT BY 1
+START WITH 1
+NOMAXVALUE
+NOCYCLE
+NOCACHE;
